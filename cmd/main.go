@@ -50,7 +50,12 @@ func main() {
 		sugar.Error("Failed to connect to db", zap.Error(err))
 		return
 	}
-	defer db.Close()
+	defer func(db *sqlx.DB) {
+		err := db.Close()
+		if err != nil {
+
+		}
+	}(db)
 	sugar.Info("The application successfully connected to database")
 
 	var (
