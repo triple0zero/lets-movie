@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+    # ---------------------------- Postgresql ----------------------------
+  postgres_lets_movie:
+    container_name: postgres_lets_movie
+    image: postgres:15
+    mem_limit: 400M
+    ports:
+      - 7842:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_USER: ${LM_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${LM_POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${LM_POSTGRES_DATABASE}
+
+volumes:
+  db:
